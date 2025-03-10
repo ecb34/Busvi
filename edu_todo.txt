@@ -1,0 +1,5 @@
+API -> soy una company, quiero consumir este cheque regalo, ok , ko y por qué?
+
+Web -> crear cheques
+       Enviar cheque por emaiil
+       introducir hash de cheque
