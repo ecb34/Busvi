@@ -18,3 +18,5 @@ composer.lock
 
 .Ds_Store
 public/.DS_Store
+.env.production
+.env.produccion
