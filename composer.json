@@ -74,10 +74,6 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true,
-        "allow-plugins": {
-            "kylekatarnls/update-helper": true,
-            "symfony/thanks": true
-        }
+        "optimize-autoloader": true
     }
 }

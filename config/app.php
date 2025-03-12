@@ -188,6 +188,7 @@ return [
 
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
 
+
         Spatie\Geocoder\GeocoderServiceProvider::class,
 
     ],

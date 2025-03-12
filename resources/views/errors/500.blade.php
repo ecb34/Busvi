@@ -7,7 +7,7 @@
         </h1>
     </section>
     <div class="content" >
-        @include('adminlte::common.errors')
+        @include('adminlte-templates::common.errors')
         <div class="error-page">
             <h2 class="headline text-yellow"> 500</h2>
 
