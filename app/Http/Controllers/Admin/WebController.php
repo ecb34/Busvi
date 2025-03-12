@@ -125,7 +125,7 @@ class WebController extends Controller
     public function edit($id)
     {
         $post = Post::where('id', $id)->with(['media' => function($q){
-            $q->orderBy('custom_properties->order', 'asc');
+            $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
         }])->first();
 
         return view('admin.web.edit', ['post' => $post]);
@@ -325,7 +325,7 @@ class WebController extends Controller
         \Session::flash('message', trans('app.admin.web.imagen_eliminada'));
 
         $post = Post::where('id', $post->id)->with(['media' => function($q){
-            $q->orderBy('custom_properties->order', 'asc');
+            $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
         }])->first();
 
         $i = 0;
@@ -372,7 +372,7 @@ class WebController extends Controller
             case 'subir':
 
                 $post = Post::where('id', $request->post_id)->with(['media' => function($q){
-                    $q->orderBy('custom_properties->order', 'asc');
+                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
                 }])->first();
 
                 $media_anterior = null;
@@ -398,7 +398,7 @@ class WebController extends Controller
             case 'bajar': 
 
                 $post = Post::where('id', $request->post_id)->with(['media' => function($q){
-                    $q->orderBy('custom_properties->order', 'desc');
+                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
                 }])->first();
 
                 $media_anterior = null;
@@ -424,7 +424,7 @@ class WebController extends Controller
         }
 
         $post = Post::where('id', $post->id)->with(['media' => function($q){
-            $q->orderBy('custom_properties->order', 'asc');
+            $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
         }])->first();
 
         $i = 0;

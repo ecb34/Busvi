@@ -49,11 +49,11 @@ class HomeController extends Controller
     {
 
         $slider_inicio = Post::where('slug', 'slider-inicio')->with(['media' => function($q){
-            $q->orderBy('custom_properties->order', 'asc');
+            $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
         }])->first();
 
         $slider_servicios = Post::where('slug', 'slider-servicios')->with(['media' => function($q){
-            $q->orderBy('custom_properties->order', 'asc');
+            $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(custom_properties, '$.order')) ASC");
         }])->first();
      
         $companies = Company::payed()->get();
