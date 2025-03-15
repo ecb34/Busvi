@@ -8,10 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use LaravelFCM\Message\OptionsBuilder;
-use LaravelFCM\Message\PayloadDataBuilder;
-use LaravelFCM\Message\PayloadNotificationBuilder;
-use FCM;
+use App\Services\FirebaseService;
 
 use App\PushToken;
 
@@ -50,30 +47,14 @@ class PushUpdateReservaJob implements ShouldQueue
             }
 
             $body = date('d/m/Y', strtotime($this->reserva->fecha)).' - '.$this->reserva->turno->nombre;
-
-            $optionBuilder = new OptionsBuilder();
-            $optionBuilder->setTimeToLive(60*20);
-
-            $notificationBuilder = new PayloadNotificationBuilder($title);
-            $notificationBuilder->setBody($body)
-                                ->setSound('default');
-
-            $dataBuilder = new PayloadDataBuilder();
-            $dataBuilder->addData([
+            $data = [
                 'tipo' => 'reserva_actualizada',
                 'reserva_id' => $this->reserva->id,
                 'token' => $this->reserva->user->api_token,
-            ]);
-
-            $option = $optionBuilder->build();
-            $notification = $notificationBuilder->build();
-            $data = $dataBuilder->build();
+            ];
 
             foreach ($this->reserva->user->getTokens as $token){
-                $downstreamResponse = FCM::sendTo($token->push_token, $option, $notification, $data);
-                foreach($downstreamResponse->tokensToDelete() as $token_delete){
-                    \App\PushToken::where('push_token', $token_delete)->delete();
-                }
+                $firebaseService->sendNotification($token->push_token, $title, $body, $data);
             }
 
         }

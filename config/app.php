@@ -173,7 +173,6 @@ return [
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
-        LaravelFCM\FCMServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -249,9 +248,6 @@ return [
         'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'FCM'      => LaravelFCM\Facades\FCM::class,
-        'FCMGroup' => LaravelFCM\Facades\FCMGroup::class, // Optional
-
         'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
 
     ],
