@@ -63,7 +63,7 @@ class PushNuevoEventoJob implements ShouldQueue
                 ];
 
                 foreach ($this->evento->company->admin->getTokens as $token){
-                    $firebaseService->sendNotification($token, $title, $body, $data);
+                    $firebaseService->sendNotification($token->push_token, $title, $body, $data);
                 }
 
             }    

@@ -8,10 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use LaravelFCM\Message\OptionsBuilder;
-use LaravelFCM\Message\PayloadDataBuilder;
-use LaravelFCM\Message\PayloadNotificationBuilder;
-use FCM;
+use App\Services\FirebaseService;
 
 use App\PushToken;
 
@@ -38,28 +35,8 @@ class PushRememberJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(FirebaseService $firebaseService)
     {
-        $optionBuilder = new OptionsBuilder();
-        $optionBuilder->setTimeToLive(60*20);
-
-        $notificationBuilder = new PayloadNotificationBuilder($this->data['title']);
-        $notificationBuilder->setBody($this->data['body'])
-                            ->setSound('default');
-
-        $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData($this->data);
-
-        $option = $optionBuilder->build();
-        $notification = $notificationBuilder->build();
-        $data = $dataBuilder->build();
-
-        $token = $this->token;
-
-        $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
-        foreach($downstreamResponse->tokensToDelete() as $token){
-            $token = \App\PushToken::where('push_token', $token)->delete();
-        }
-
+        $firebaseService->sendNotification($this->token, $this->data['title'], $this->data['body'], $this->data);
     }
 }
