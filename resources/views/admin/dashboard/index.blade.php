@@ -26,9 +26,9 @@
             </div>
         </div>
 
-        <? if(\Auth::user()->role == 'user'){ ?>
+        <?php if(\Auth::user()->role == 'user'){ ?>
         @include('admin.reservas.listado_reservas_home')
-        <? } ?>
+        <?php } ?>
 
         <div class="row">
             <div class="col-xs-8">

@@ -76,14 +76,6 @@
 	    </a>
 	</li>
 
-	<? /*
-	<li class="">
-	    <a href="{!! route('subscriptions.index') !!}" class="{{ Request::is('admin/subscriptions*') ? 'active' : '' }}">
-	    	<i class="fa fa-pencil" aria-hidden="true"></i><span>{{ trans('app.common.subscriptions') }}</span>
-	    </a>
-	</li>
-	*/ ?>
-
 	<li class="">
 	    <a href="{!! route('web.index') !!}" class="{{ Request::is('admin/web*') ? 'active' : '' }}">
 	    	<i class="fa fa-at" aria-hidden="true"></i><span>{{ trans('app.common.web') }}</span>
