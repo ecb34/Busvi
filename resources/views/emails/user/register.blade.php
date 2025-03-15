@@ -232,7 +232,6 @@
 				<p>Estos son los datos de tu registro:<br><br></p>
 				<p>Usuario: <span>{{ $data->username }}</span></p>
 				<p>eMail: <span>{{ $data->email }}</span></p>
-				<p>Teléfono: <span>{{ $data->phone }}</span></p>
 				<br>
 				<p>La contraseña... es cosa tuya, nosotros la tenemos cifrada ;)</p>
 				<p>Aunque si no la conoces o no la recuerdas, puedes generar una nueva desde aquí:</p>

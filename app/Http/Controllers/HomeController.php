@@ -387,16 +387,10 @@ class HomeController extends Controller
 
             $user = new User();
 
-            $user->name     = $request->name;
-            $user->surname  = $request->surname;
+            $user->name = $request->name;
             $user->username = $request->email;
-            $user->address  = $request->address;
-            $user->birthday = Carbon::parse($request->birthday)->format('Y-m-d');
-            $user->genere   = $request->genere;
             $user->email    = $request->email;
             $user->role     = $request->type;
-            $user->phone    = $request->phone;
-            $user->cp       = $request->cp;
             $user->password = bcrypt($request->password);
 
             if ($user->save())

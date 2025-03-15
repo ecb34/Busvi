@@ -27,67 +27,11 @@
             <div class="register-form text-center col-lg-12 col-md-12 col-xs-12">
                 {!! Form::open(['route' => 'home.make_register', 'method' => 'POST']) !!}
                     {!! Form::hidden('type', 'user') !!}
+
                     <div class="input-two space-80">
                         <div class="input-box">
                             {!! Form::label('name', 'Nombre: *') !!}
                             {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        </div>
-                        <div class="input-box">
-                            {!! Form::label('surname', 'Apellidos: *') !!}
-                            {!! Form::text('surname', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        </div>
-                    </div>
-
-                    <div class="input-two space-80">
-                        <div class="input-box">
-                            {!! Form::label('username', 'Username: *') !!}
-                            {!! Form::text('username', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        </div>
-                        <div class="input-box">
-                            {!! Form::label('address', 'Dirección:') !!}
-                            {!! Form::text('address', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="input-two space-80 overflow-visible">
-                        <div class="input-box">
-                            {!! Form::label('birthday', 'Nacimiento:') !!}
-                            <div class='input-group date' id='datetimepicker1'>
-                                {!! Form::text('birthday', null, ['class' => 'form-control']) !!}
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="input-box">
-                            {!! Form::label('genere', 'Género:') !!}
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <label for="genere1" class="check">
-                                        <input class="form-check-input" type="radio" name="genere" id="genere1" value="1">
-                                        {!! Form::label('genere1', trans('app.common.man')) !!}
-                                    </label>
-                                </div>
-                                <div class="col-xs-4">
-                                    <label for="genere2" class="check">
-                                        <input class="form-check-input" type="radio" name="genere" id="genere2" value="0">
-                                        {!! Form::label('genere2', trans('app.common.woman')) !!}
-                                    </label>
-                                </div>
-                                <div class="col-xs-4">
-                                    <label for="genere3" class="check">
-                                        <input class="form-check-input" type="radio" name="genere" id="genere3" value="2">
-                                        {!! Form::label('genere3', trans('app.common.others')) !!}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-two space-80">
-                        <div class="input-box">
-                            {!! Form::label('phone', 'Teléfono: *') !!}
-                            {!! Form::text('phone', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         </div>
                         <div class="input-box">
                             {!! Form::label('email', 'Email: *') !!}
