@@ -240,10 +240,8 @@ class UserAPIController extends Controller
                 $user = new User();
 
                 $user->name     = $this->params['name'];
-                $user->surname  = $this->params['surname'];
                 $user->username = $this->params['email'];
                 $user->email    = $this->params['email'];
-                $user->phone    = $this->params['phone'];
                 $user->role     = 'user';
                 $user->password = bcrypt($this->params['password']);
 
