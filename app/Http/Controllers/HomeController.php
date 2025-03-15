@@ -374,7 +374,6 @@ class HomeController extends Controller
         {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|unique:users',
-                'username' => 'required|unique:users',
                 'password' => 'required|min:5',
                 'password_confirmation' => 'required|same:password',
             ]);
@@ -383,21 +382,6 @@ class HomeController extends Controller
             {
                 $request->session()->flash('status', 'validation_error');
 
-                // $error = 'Error. ';
-
-                // if ($validator->errors()->first('email'))
-                // {
-                //     $error .= $validator->errors()->first('email');
-                // }
-                // elseif ($validator->errors()->first('password'))
-                // {
-                //     $error .= $validator->errors()->first('password');
-                // }
-                // elseif ($validator->errors()->first('username'))
-                // {
-                //     $error .= $validator->errors()->first('username');
-                // }
-
                 return redirect()->back()->withErrors($validator);
             }
 
@@ -405,7 +389,7 @@ class HomeController extends Controller
 
             $user->name     = $request->name;
             $user->surname  = $request->surname;
-            $user->username = $request->username;
+            $user->username = $request->email;
             $user->address  = $request->address;
             $user->birthday = Carbon::parse($request->birthday)->format('Y-m-d');
             $user->genere   = $request->genere;

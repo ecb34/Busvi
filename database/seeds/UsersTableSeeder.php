@@ -13,6 +13,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        $user = new \App\User;
+        $user->name = 'SuperAdmin';
+        $user->username = 'eduardocorreal+busvi@hotmail.com';
+        $user->email = 'eduardocorreal+busvi@hotmail.com';
+        $user->password = bcrypt('Mvlc7931');
+        $user->role = 'superadmin';
+        $user->save();
+
         $user = new \App\User; 
         $user->name = 'SuperAdmin';
         $user->username = 'superadmin';

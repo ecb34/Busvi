@@ -309,7 +309,7 @@ class CompaniesController extends Controller
      * Crea el administrador de la empresa.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
+     * @return
      */
     private function createAdmin(Request $request, $company)
     {
@@ -332,7 +332,7 @@ class CompaniesController extends Controller
     		$admin->role 		= 'admin';
             $admin->name        = $request->user_name;
             $admin->surname     = $request->user_surname;
-			$admin->username 	= $request->username;
+			$admin->username 	= $request->email;
             $admin->email       = $request->email;
             $admin->phone       = $request->phone;
 			$admin->password 	= bcrypt($request->password);

@@ -241,7 +241,7 @@ class UserAPIController extends Controller
 
                 $user->name     = $this->params['name'];
                 $user->surname  = $this->params['surname'];
-                $user->username = $this->params['username'];
+                $user->username = $this->params['email'];
                 $user->email    = $this->params['email'];
                 $user->phone    = $this->params['phone'];
                 $user->role     = 'user';
@@ -298,7 +298,6 @@ class UserAPIController extends Controller
             {
                 $user->name     = $this->params['name'];
                 $user->surname  = $this->params['surname'];
-                $user->username = $this->params['username'];
                 $user->address  = $this->params['address'];
                 $user->city     = $this->params['city'];
                 $user->cp       = $this->params['cp'];
@@ -318,6 +317,7 @@ class UserAPIController extends Controller
                     }
 
                     $user->email = $this->params['email'];
+                    $user->username = $this->params['email'];
                 }
 
                 $user->save();
