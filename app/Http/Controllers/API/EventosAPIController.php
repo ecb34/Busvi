@@ -168,4 +168,61 @@ class EventosAPIController extends Controller
     return response()->json(['msg' => trans('api.error_permisos')], 500);  
   }
 
+  public function create(){
+    $user = \App\User::where('api_token', $this->params['token'])->first();
+    if($user){
+        $evento = new Evento();
+        $evento->nombre = $this->params['name'];
+        $evento->descripcion = $this->params['description'];
+        $evento->desde = $this->params['startDate'];
+        $evento->hasta = $this->params['endDate'];
+        $evento->company_id = $this->params['companyId'];
+        $evento->categoria_id = $this->params['categoryId'];
+        $evento->organizador_id = $user->id;
+        $evento->validado = 0;
+
+        $evento['desde'] = Carbon::parse($this->params['startDate']);
+        if(!$this->params['price']){
+            $evento->price = 0;
+            $evento['pagado_a_comercio'] = 1;
+        }else{
+            $evento['pagado_a_comercio'] = 0; //pendiente de pago si tiene precio
+            $evento->price = $this->params['price']; 
+        }
+        if($this->params['endDate']){
+            $evento['hasta'] = Carbon::parse($this->params['endDate']);
+            if($evento['hasta']->lessThanOrEqualTo($evento['desde']) ){
+                return response()->json(['msg' => 'fechas incorrectas.'], 500);
+            }
+        }
+        
+        if($evento->save()){
+            return response()->json(['evento' => $evento], 200);
+        }
+        
+        return response()->json(['msg' => 'Error al crear el evento'], 500);
+    }
+    return response()->json(['msg' => trans('api.error_permisos')], 500);
+  }
+
+  public function listCategories(){
+    $user = \App\User::where('api_token', $this->params['token'])->first();
+    if($user){
+        return response()->json([
+            'categories' => \App\CategoriaEvento::orderBy('nombre', 'asc')->get()
+        ], 200);
+    }
+    return response()->json(['msg' => trans('api.login_incorrecto')], 500);
+  }
+
+  public function listCompanies(){
+    $user = \App\User::where('api_token', $this->params['token'])->first();
+    if($user){
+        return response()->json([
+            'companies' => \App\Company::where('accept_eventos', 1)->orderBy('name', 'asc')->select('id', 'name')->get()
+        ], 200);
+    }
+    return response()->json(['msg' => trans('api.login_incorrecto')], 500);
+  }
+
 }

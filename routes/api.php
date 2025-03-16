@@ -76,6 +76,8 @@ Route::post('chequesRegalo/disponibles', 'API\ChequeRegaloAPIController@misChequ
 Route::post('chequesRegalo/comprobar', 'API\ChequeRegaloAPIController@comprobar');
 Route::post('chequesRegalo/consumir', 'API\ChequeRegaloAPIController@consumir');
 Route::post('chequesRegalo/historico', 'API\ChequeRegaloAPIController@historicoConsumidos');
+Route::post('chequesRegalo', 'API\ChequeRegaloAPIController@create');
+Route::get('chequesRegalo/negocios', 'API\ChequeRegaloAPIController@listCompanies');
 
 // Eventos
  Route::post('eventos/disponibles', 'API\EventosAPIController@misEventosDisponibles'); 
@@ -85,3 +87,6 @@ Route::post('chequesRegalo/historico', 'API\ChequeRegaloAPIController@historicoC
  Route::post('eventos/historico', 'API\EventosAPIController@historicoConsumidos');
  Route::post('eventos/negocio/misEventos', 'API\EventosAPIController@negocioMisEventos');
  Route::post('eventos/validar', 'API\EventosAPIController@validar');
+ Route::post('eventos', 'API\EventosAPIController@create');
+ Route::get('eventos/categorias', 'API\EventosAPIController@listCategories');
+ Route::get('eventos/negocios', 'API\EventosAPIController@listCompanies');

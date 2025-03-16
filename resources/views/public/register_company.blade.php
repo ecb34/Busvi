@@ -85,12 +85,6 @@
                             {!! Form::text('phone', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         </div>
 
-                        <!-- Phone2 Field -->
-                        <div class="input-box">
-                            {!! Form::label('phone2', trans('app.common.phone') . ' 2:') !!}
-                            {!! Form::text('phone2', null, ['class' => 'form-control']) !!}
-                        </div>
-
                         <!-- Sector Field -->
                         <div class="input-box">
                             {!! Form::label('sector_id', trans('app.common.sector') . ': *') !!}
@@ -103,12 +97,6 @@
                         <div class="input-box col-sm-12">
                             {!! Form::label('name', trans('app.common.name') . ': *') !!}
                             {!! Form::text('user_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        </div>
-
-                        <!-- Username Field -->
-                        <div class="input-box col-sm-6">
-                            {!! Form::label('username', trans('app.common.username') . ': *') !!}
-                            {!! Form::text('username', null, ['class' => 'form-control', 'required' => 'required']) !!}
                         </div>
 
                         <!-- Email Field -->

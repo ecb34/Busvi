@@ -105,4 +105,39 @@ class ChequeRegaloAPIController extends Controller
      return response()->json(['msg' => trans('api.error_permisos')], 500);  
 
   }
+
+  public function create(Request $request){
+    $input = $request->all();
+
+    $user = \App\User::where('api_token', $input['token'])->first();
+    if($user == null){
+        return response()->json(['msg' => trans('api.error_permisos')], 500);  
+    }
+
+    $this->validate($request, [
+        'email' => 'required|email',
+        'importe' => 'required|numeric|min:1',
+    ]);
+
+    $input['from_user_id'] = $user->id;
+
+    if(trim($input['email']) == $user->email){
+        $input['to_user_id'] = $user->id;
+    }
+
+    $input['status'] = 0; // pendiente de pago
+    
+    $cheque_regalo = ChequeRegalo::create($input);
+    return response()->json(['cheque_regalo' => $cheque_regalo], 200);
+  }
+
+  public function listCompanies(){
+    $user = \App\User::where('api_token', $this->params['token'])->first();
+    if($user){
+        return response()->json([
+            'companies' => \App\Company::where('accept_cheque_regalo', 1)->orderBy('name', 'asc')->select('id', 'name')->get()
+        ], 200);
+    }
+    return response()->json(['msg' => trans('api.login_incorrecto')], 500);
+  }
 }
