@@ -59,7 +59,7 @@ class PushNuevoEventoJob implements ShouldQueue
                 $data = [
                     'tipo' => 'nuevo_evento',
                     'evento_id' => $this->evento->id,
-                    'token' => $admin->api_token,
+                    'token' => $this->evento->company->admin->api_token,
                 ];
 
                 foreach ($this->evento->company->admin->getTokens as $token){
