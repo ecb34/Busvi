@@ -26,6 +26,7 @@ use Session;
 use Redirect;
 use App\Company;
 use Auth;
+use App\Services\StripePaymentService;
 
 class PaymentController extends Controller
 {
@@ -190,33 +191,30 @@ class PaymentController extends Controller
 
 	public function StripeStatus($id, Request $request)
 	{
-		\Laravel\Cashier\Cashier::useCurrency('eur');
-
 		$company = Company::find($id);
 		$user = $company->admin;
     	
     	$plan = session('type');
 
-    	// $stripe_token = $request->token;
+		$amount = (int) round(((float) $request->amount) * 100);
 
-    	$amount = $request->amount * 100;
-
-    	$card = $user->addCard([
-		    'cardNumber' => $request->card,
-		    'expiryMonth' => $request->month,
-		    'expiryYear' => $request->year,
-		    'cvc' => $request->cvv
-		]);
-
-		if (! isset($card['cardId']))
-		{
-			return redirect()->back()->with(['m_status' => 'danger', 'message' => $card['message']]);
+		try {
+			app(StripePaymentService::class)->charge(
+				$amount,
+				$request,
+				'Suscripcion Busvi',
+				[
+					'company_id' => (string) $company->id,
+					'user_id' => (string) $user->id,
+					'plan' => (string) $plan,
+				]
+			);
+		} catch (\Throwable $e) {
+			return redirect()->back()->with([
+				'm_status' => 'danger',
+				'message' => 'No se ha podido procesar el pago con tarjeta: '.$e->getMessage(),
+			]);
 		}
-
-		$user->charge($amount, [
-		     'cardId' => $card['cardId']
-		]);
-    	// $user->charge($amount);
 
 		$company->payed = 1;
 		$company->type = (session('type') == 'basic') ? 0 : 1;

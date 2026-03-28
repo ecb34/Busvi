@@ -31,6 +31,7 @@ use Mail;
 use App\Mail\EventoMail;
 use App\DataTables\AdminEventosDataTable; 
 use Ramsey\Uuid\Uuid;
+use App\Services\StripePaymentService;
 use App\Jobs\PushNuevoEventoJob;
 use App\Jobs\PushEventoValidadoJob;
 use Yajra\DataTables\DataTables as DataTablesDataTables;
@@ -814,31 +815,22 @@ class EventoController extends Controller
             return redirect()->route('admin.eventos.asistire')->with(['message' => 'Lo sentimos mucho pero las plazas disponibles para el evento se han agotado', 'm_status' => 'error']);
         }
 
-        \Laravel\Cashier\Cashier::useCurrency('eur');
         $user = \Auth::user();
 
-        $amount = ($request->amount ) * 100;
-        $card = $user->addCard([
-            'cardNumber' => $request->card,
-            'expiryMonth' => $request->month,
-            'expiryYear' => $request->year,
-            'cvc' => $request->cvv
-        ]);
-
-        if (! isset($card['cardId']))
-        {
-            if (\Request::ajax()) {
-                return json_encode(['message' => $card['message'], 'm_status' => 'error']);
-            } else {
-                return redirect()->back()->with(['m_status' => 'danger', 'message' => $card['message']]);
-            }
-        }
+        $amount = (int) round(((float) $request->amount) * 100);
 
         try {
 
-            $user->charge($amount, [
-                'cardId' => $card['cardId']
-            ]);
+            app(StripePaymentService::class)->charge(
+                $amount,
+                $request,
+                'Pago evento '.$evento->id,
+                [
+                    'evento_id' => (string) $evento->id,
+                    'cliente_evento_id' => (string) $cliente_evento_id,
+                    'user_id' => (string) $user->id,
+                ]
+            );
 
             //TODO: Y si no paga que?
 

@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Laravel\Cashier\Billable;
-use Coderity\Wallet\Billable;
+use Laravel\Cashier\Billable;
 // use Spatie\Permission\Traits\HasRoles;
 
 use Auth;

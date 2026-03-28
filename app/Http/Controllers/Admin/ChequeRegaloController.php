@@ -28,6 +28,7 @@ use Redirect;
 use Mail;
 use App\Mail\ChequeMail;
 use App\DataTables\AdminChequeRegaloDataTable; 
+use App\Services\StripePaymentService;
 
 class ChequeRegaloController extends Controller
 {
@@ -551,25 +552,26 @@ class ChequeRegaloController extends Controller
             return redirect()->route('admin.cheques_regalo.pendientes_pago')->with(['message' => $message, 'm_status' => $m_status]);
         }
 
-        \Laravel\Cashier\Cashier::useCurrency('eur');
         $user = \Auth::user();
 
-        $amount = $cheque_regalo->importe * 100;
-        $card = $user->addCard([
-            'cardNumber' => $request->card,
-            'expiryMonth' => $request->month,
-            'expiryYear' => $request->year,
-            'cvc' => $request->cvv
-        ]);
+        $amount = (int) round(((float) $cheque_regalo->importe) * 100);
 
-        if (! isset($card['cardId']))
-        {
-            return redirect()->back()->with(['m_status' => 'danger', 'message' => $card['message']]);
+        try {
+            app(StripePaymentService::class)->charge(
+                $amount,
+                $request,
+                'Pago cheque regalo '.$cheque_regalo->id,
+                [
+                    'cheque_regalo_id' => (string) $cheque_regalo->id,
+                    'user_id' => (string) $user->id,
+                ]
+            );
+        } catch (\Throwable $e) {
+            return redirect()->back()->with([
+                'm_status' => 'danger',
+                'message' => 'No se ha podido procesar el pago con tarjeta: '.$e->getMessage(),
+            ]);
         }
-
-        $user->charge($amount, [
-             'cardId' => $card['cardId']
-        ]);
 
         //TODO: Y si no paga que?
 

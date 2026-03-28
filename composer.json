@@ -10,7 +10,6 @@
     "require": {
         "php": ">=7.0.0",
         "barryvdh/laravel-snappy": "^0.4.1",
-        "coderity/wallet": "~1.0",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "~3.3",
         "fruitcake/laravel-cors": "^1.0",
@@ -30,6 +29,7 @@
         "spatie/geocoder": "^3.5",
         "spatie/laravel-medialibrary": "^7.18",
         "spatie/laravel-permission": "^2.9",
+        "stripe/stripe-php": "^7.128",
         "srmklive/paypal": "^1.6",
         "webpatser/laravel-uuid": "^3.0",
         "yajra/laravel-datatables": "^1.2"
